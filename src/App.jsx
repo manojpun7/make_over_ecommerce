@@ -5,6 +5,7 @@ import HeroPage from "./components/HeroPage";
 import FlashSale from "./components/FlashSale";
 import ProductOfDay from "./components/ProductOfDay";
 import BestBeautyProducts from "./components/BestBeautyProducts";
+import Accessories from "./components/Accessories";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
       <FlashSale />
       <ProductOfDay/>
       <BestBeautyProducts/>
+      <Accessories/>
     </div>
   );
 }

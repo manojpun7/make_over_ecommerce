@@ -67,7 +67,7 @@ const Navbar = () => {
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-      <div className="flex justify-around items-center h-9  bg-pink-400">
+      <div className="flex justify-around text-white items-center h-9  bg-pink-400">
         <svg
           width="22"
           height="20"
@@ -98,6 +98,9 @@ const Navbar = () => {
             strokeLinejoin="round"
           />
         </svg>
+        <span className="mx-2 wave-text hidden sm:inline text-xs md:text-sm lg:text-base">
+          NG VOUCHER UP TO Rs.1000
+        </span>
 
         <svg
           width="22"
@@ -112,6 +115,10 @@ const Navbar = () => {
             fill="#FE66C2"
           />
         </svg>
+        <span className="mx-2 wave-text hidden sm:inline text-xs md:text-sm lg:text-base">
+          FREE GIFTS ON EVERY PURCHASE
+        </span>
+
         <svg
           width="22"
           height="20"
@@ -131,6 +138,9 @@ const Navbar = () => {
             strokeLinejoin="round"
           />
         </svg>
+        <span className="mx-2 wave-text hidden sm:inline text-xs md:text-sm lg:text-base">
+          Rs.1000 INSIDE POKHARA
+        </span>
       </div>
       <div className="hidden md:flex justify-center items-center space-x-10 py-2 border-t border-gray-200">
         <NavLink text="Women" />
