@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import HeroPage from "./components/HeroPage";
 import FlashSale from "./components/FlashSale";
 import ProductOfDay from "./components/ProductOfDay";
+import BestBeautyProducts from "./components/BestBeautyProducts";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <HeroPage />
       <FlashSale />
       <ProductOfDay/>
+      <BestBeautyProducts/>
     </div>
   );
 }
