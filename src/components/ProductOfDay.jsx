@@ -1,22 +1,18 @@
 import React from "react";
-import frok from "../assets/flash-sale/frok.png";
-import hair from "../assets/flash-sale/hair.png";
-import moisturizer from "../assets/flash-sale/moisturizer.png";
-import ring from "../assets/flash-sale/ring.png";
-import shoes from "../assets/flash-sale/shoes.png";
-import shirt from "../assets/flash-sale/shirt.png";
-import coupon1 from "../assets/flash-sale/1coupon.png";
-import coupon2 from "../assets/flash-sale/2coupon.png";
-import coupon3 from "../assets/flash-sale/3coupon.png";
-import coupon4 from "../assets/flash-sale/4coupon.png";
+import baby from "../assets/product-of-the-day/baby.png";
+import bag from "../assets/product-of-the-day/bag.png";
+import purse from "../assets/product-of-the-day/purse.png";
+import serum from "../assets/product-of-the-day/serum.png";
+import shampoo from "../assets/product-of-the-day/shampoo.png";
+import watch from "../assets/product-of-the-day/watch.png";
 
 import ProductCard from "./ProductCard";
 
 const products = [
   {
     id: 1,
-    title: "Daily Moisturizing Lotion",
-    image: moisturizer,
+    title: "Baby Dress Set Pure Cotton",
+    image: baby,
     rating: 4.6,
     reviews: 311,
     discount: "11% off",
@@ -26,8 +22,8 @@ const products = [
   },
   {
     id: 2,
-    title: "Ladies Cotton Blue Dress",
-    image: frok,
+    title: "Color Contrast Handbag For Female",
+    image: bag,
     rating: 4.6,
     reviews: 311,
     discount: "12% off",
@@ -36,8 +32,8 @@ const products = [
   },
   {
     id: 3,
-    title: "Ecco Men's Soft Sneaker",
-    image: shoes,
+    title: "Black Leather Accessories Male",
+    image: purse,
     rating: 4.6,
     reviews: 311,
     discount: "7% off",
@@ -46,8 +42,8 @@ const products = [
   },
   {
     id: 4,
-    title: "Long Wavy Hair Wig",
-    image: hair,
+    title: "Platinum Watch Set Male",
+    image: watch,
     rating: 4.6,
     reviews: 311,
     discount: "10% off",
@@ -57,8 +53,8 @@ const products = [
   },
   {
     id: 5,
-    title: "Platinum Ring Set-6",
-    image: ring,
+    title: "Bare Anatomy Ultra Smooth Shampoo",
+    image: shampoo,
     rating: 4.6,
     reviews: 311,
     discount: "15% off",
@@ -68,8 +64,8 @@ const products = [
   },
   {
     id: 6,
-    title: "New Black Shirt Full Sleeve",
-    image: shirt,
+    title: "Organic Vitamin C Serum",
+    image: serum,
     rating: 4.6,
     reviews: 311,
     discount: "10% off",
@@ -78,13 +74,13 @@ const products = [
   },
 ];
 
-const FlashSale = () => {
+const ProductOfDay = () => {
   return (
     <div className="bg-gradient-to-br from-pink-50 via-white to-red-50 py-10 px-4 sm:px-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
-          Flash Sale
+          Product Of The Day
         </h2>
         <a
           href="#"
@@ -100,16 +96,8 @@ const FlashSale = () => {
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-
-      {/* Coupon Section */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:flex justify-evenly gap-4 bg-gradient-to-r from-pink-200 to-pink-100 rounded-lg shadow p-4">
-        <img src={coupon1} alt="coupon1" />
-        <img src={coupon2} alt="coupon2" />
-        <img src={coupon3} alt="coupon3" />
-        <img src={coupon4} alt="coupon4" />
-      </div>
     </div>
   );
 };
 
-export default FlashSale;
+export default ProductOfDay;

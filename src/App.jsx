@@ -3,6 +3,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import HeroPage from "./components/HeroPage";
 import FlashSale from "./components/FlashSale";
+import ProductOfDay from "./components/ProductOfDay";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Navbar />
       <HeroPage />
       <FlashSale />
+      <ProductOfDay/>
     </div>
   );
 }
