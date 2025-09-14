@@ -2,7 +2,7 @@ import React from "react";
 
 const ProductCard = ({ product }) => {
   return (
-    <div className="pl-4 pt-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 p-1 relative flex flex-col">
+    <div className="pl-4 pb-4 pt-4 bg-white rounded-xl shadow-sm hover:shadow-2xl border-pink-600 transition-all duration-300 p-1 relative flex flex-col">
       {/* Tag */}
       {product.tag && (
         <span className="absolute top-2 left-2 bg-pink-500 text-white text-xs font-semibold px-2 py-1 rounded">

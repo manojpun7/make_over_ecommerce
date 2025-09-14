@@ -1,5 +1,6 @@
 import React from "react";
 import { Facebook, Instagram, Twitter, Linkedin } from "lucide-react";
+import logo from '../assets/logo.png'
 
 const Footer = () => {
   return (
@@ -10,16 +11,16 @@ const Footer = () => {
           {/* Logo + Tagline */}
           <div className="mb-3">
             <img
-              src="/logo.png" // replace with your logo
+              src={logo}
               alt="Makeover Me"
-              className="h-14 mb-2"
+              className="h-20 mb-2"
             />
-            <p className="text-pink-500 italic text-sm">The Key to a New Me</p>
-            <h2 className="text-pink-600 font-bold text-xl">Makeover Me</h2>
+            <p className="text-pink-500 italic text-xl">The Key to a New Me</p>
+            <h2 className="text-pink-600 font-bold text-3xl">Makeover Me</h2>
           </div>
 
           {/* About */}
-          <p className="text-sm leading-relaxed">
+          <p className="text-md leading-relaxed">
             "Makeover Me" is a unique e-commerce platform aimed at
             revolutionizing the way people experience personal
             transformations. It offers a seamless and interactive online
@@ -30,8 +31,8 @@ const Footer = () => {
 
         {/* MM Categories */}
         <div>
-          <h3 className="text-pink-500 font-semibold mb-3">MM Categories</h3>
-          <ul className="space-y-2 text-sm">
+          <h3 className="text-pink-500  font-semibold mb-3">MM Categories</h3>
+          <ul className="space-y-2 text-md">
             <li>Women</li>
             <li>Men</li>
             <li>Kids</li>
@@ -44,7 +45,7 @@ const Footer = () => {
         {/* Help & Support */}
         <div>
           <h3 className="text-pink-500 font-semibold mb-3">Help & Support</h3>
-          <ul className="space-y-2 text-sm">
+          <ul className="space-y-2 text-md">
             <li>Who are we?</li>
             <li>Our Services</li>
             <li>Contact Us</li>
@@ -63,9 +64,9 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Enter your Email"
-              className="flex-1 px-3 py-2 text-sm rounded-l-md border border-gray-300 focus:outline-none"
+              className="flex-1 px-3 py-2 text-md rounded-l-md border border-gray-300 focus:outline-none"
             />
-            <button className="bg-pink-500 text-white px-4 py-2 rounded-r-md text-sm hover:bg-pink-600">
+            <button className="bg-pink-500 text-white px-4 py-2 rounded-r-md text-md hover:bg-pink-600">
               SUBSCRIBE
             </button>
           </div>
@@ -81,7 +82,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom line */}
-      <div className="mt-10 border-t border-gray-300 pt-4 text-center text-sm text-gray-600">
+      <div className="mt-10 border-t border-gray-300 pt-4 text-center text-md text-gray-600">
         Copyright © All Rights Reserved
       </div>
     </footer>

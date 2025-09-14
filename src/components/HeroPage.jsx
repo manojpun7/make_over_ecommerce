@@ -62,7 +62,7 @@ const HeroPage = () => {
             {categories.map((category, index) => (
               <div
                 key={index}
-                className="flex flex-col items-center p-4 rounded-xl cursor-pointer hover:bg-white hover:shadow-lg transition-all duration-300"
+                className="flex flex-col items-center p-4 rounded-xl cursor-pointer hover:bg-white hover:shadow-lg border-pink-600 transition-all duration-300"
               >
                 <img
                   src={category.image}
@@ -83,7 +83,6 @@ const HeroPage = () => {
         </div>
       </div>
 
-      {/* Carousel Section */}
       {/* Carousel Section */}
       <div className=" pb-8 overflow-hidden relative bg-gradient-to-br from-pink-50 via-white to-red-50 w-full">
         <style>{`

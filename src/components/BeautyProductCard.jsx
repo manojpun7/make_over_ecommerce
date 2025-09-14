@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 
 const BeautyProductCard = ({ brand }) => {
   return (
-    <div className=" bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden flex flex-col">
+    <div className=" bg-white rounded-xl shadow-sm hover:drop-shadow-2xl border-pink-600 transition-all duration-300 overflow-hidden flex flex-col">
       <div className="h-36 sm:h-40 md:h-44 lg:h-48 bg-gray-100 flex items-center justify-center">
         <img
           src={brand.image}
