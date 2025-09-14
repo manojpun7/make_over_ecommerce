@@ -1,11 +1,11 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import ellipse2 from '../assets/accessories/ellipse 2.png'
-import ellipse3 from '../assets/accessories/ellipse 3.png'
-import ellipse4 from '../assets/accessories/ellipse 4.png'
-import ellipse5 from '../assets/accessories/ellipse 5.png'
-import ellipse6 from '../assets/accessories/ellipse 6.png'
-import ellipse7 from '../assets/accessories/ellipse 7.png'
+import ellipse2 from "../assets/accessories/ellipse 2.png";
+import ellipse3 from "../assets/accessories/ellipse 3.png";
+import ellipse4 from "../assets/accessories/ellipse 4.png";
+import ellipse5 from "../assets/accessories/ellipse 5.png";
+import ellipse6 from "../assets/accessories/ellipse 6.png";
+import ellipse7 from "../assets/accessories/ellipse 7.png";
 
 const products = [
   {
@@ -91,6 +91,57 @@ const Accessories = () => {
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
+      </div>
+
+      {/* Price Categories */}
+      <div className="grid grid-cols-1  md:grid-cols-3 gap-8 text-center pt-8 mb-10">
+        {/* Skin Products */}
+        <div>
+          <h3 className="font-semibold text-lg mb-8">Get Your Skin Products</h3>
+          <div className="flex justify-evenly gap-3 flex-wrap">
+            {["600", "500", "400"].map((price, i) => (
+              <div
+                key={i}
+                className="w-20 h-20 flex flex-col justify-center items-center rounded-full bg-pink-200 text-2xl text-black font-bold"
+              >
+                <span className="text-xs font-normal">Under Rs</span>
+                {price}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Hair Products */}
+        <div>
+          <h3 className="font-semibold text-lg mb-8">Get Your Hair Products</h3>
+          <div className="flex justify-evenly gap-3 flex-wrap">
+            {["300", "200", "100"].map((price, i) => (
+              <div
+                key={i}
+                className="w-20 h-20 flex flex-col justify-center items-center rounded-full bg-cyan-100 text-black text-2xl font-bold"
+              >
+                <span className="text-xs font-normal">Under Rs</span>
+                {price}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Makeup Products */}
+        <div>
+          <h3 className="font-semibold text-lg mb-8">Get Your Makeup Products</h3>
+          <div className="flex justify-evenly gap-3 flex-wrap">
+            {["1000", "600", "300"].map((price, i) => (
+              <div
+                key={i}
+                className="w-20 h-20 flex flex-col justify-center items-center rounded-full bg-yellow-100 text-2xl text-black font-bold"
+              >
+                <span className="text-xs font-normal">Under Rs</span>
+                {price}
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
