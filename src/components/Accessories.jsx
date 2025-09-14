@@ -1,11 +1,11 @@
 import React from "react";
 import ProductCard from "./ProductCard";
-import ellipse2 from "../assets/accessories/ellipse 2.png";
-import ellipse3 from "../assets/accessories/ellipse 3.png";
-import ellipse4 from "../assets/accessories/ellipse 4.png";
-import ellipse5 from "../assets/accessories/ellipse 5.png";
-import ellipse6 from "../assets/accessories/ellipse 6.png";
-import ellipse7 from "../assets/accessories/ellipse 7.png";
+import ellipse2 from "../assets/accessories/Ellipse 2.png";
+import ellipse3 from "../assets/accessories/Ellipse 3.png";
+import ellipse4 from "../assets/accessories/Ellipse 4.png";
+import ellipse5 from "../assets/accessories/Ellipse 5.png";
+import ellipse6 from "../assets/accessories/Ellipse 6.png";
+import ellipse7 from "../assets/accessories/Ellipse 7.png";
 
 const products = [
   {
