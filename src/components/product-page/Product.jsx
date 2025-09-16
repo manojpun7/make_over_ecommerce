@@ -9,12 +9,10 @@ import SimilarProduct from "./SimilarProduct";
 const Product = () => {
   return (
     <div>
-      <Navbar />
       <ProductDescription />
       <ProductDetails />
       <CustomerReviews />
       <SimilarProduct/>
-      <Footer/>
     </div>
   );
 };
