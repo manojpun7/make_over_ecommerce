@@ -167,6 +167,11 @@ const CustomerReviews = () => {
           </div>
         ))}
       </div>
+      <div className="flex justify-center">
+        <button className="flex justify-center rounded-xl font-semibold border p-1 text-pink-400 hover:bg-pink-100 mt-8">
+          load more reviews
+        </button>
+      </div>
     </div>
   );
 };

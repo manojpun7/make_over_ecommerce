@@ -3,7 +3,7 @@ import { CheckCircle } from "lucide-react";
 
 const ProductDetails = () => {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-8 py-10">
+    <div className=" mx-auto px-4 sm:px-8 py-10 bg-gradient-to-br from-pink-50 via-white to-red-50">
       <h2 className="text-2xl font-semibold text-gray-800 mb-4">
         Product Details
       </h2>

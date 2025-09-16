@@ -8,18 +8,23 @@ import BestBeautyProducts from "./components/BestBeautyProducts";
 import Accessories from "./components/Accessories";
 import Footer from "./components/Footer";
 import BestOutfitDeal from "./components/BestOutfitDeal";
+import Product from "./components/product-page/Product";
 
 function App() {
   return (
     <div className="w-full mx-auto text-gray-800 max-w-[1440px]">
-      <Navbar />
+      {/* <Navbar />
       <HeroPage />
       <FlashSale />
       <ProductOfDay/>
       <BestBeautyProducts/>
       <Accessories/>
       <BestOutfitDeal/>
-      <Footer/>
+      <Footer/> */}
+
+
+      {/* product page */}
+      <Product/>
     </div>
   );
 }
