@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
-
 import Footer from "./components/Footer";
-
 import HomePage from "./components/HomePage";
 import { Routes, Route } from "react-router-dom";
 import Product from "./components/product-page/Product";
+
+
 
 function App() {
   return (
