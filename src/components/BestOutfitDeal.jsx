@@ -46,6 +46,26 @@ const products = [
     price: 806,
     oldPrice: 896,
   },
+  {
+    id: 5,
+    title: "Black Leather Accessories Male",
+    image: image3,
+    rating: 4.6,
+    reviews: 311,
+    discount: "7% off",
+    price: 1414,
+    oldPrice: 1520,
+  },
+  {
+    id: 6,
+    title: "Platinum Watch Set Male",
+    image: image4,
+    rating: 4.6,
+    reviews: 311,
+    discount: "10% off",
+    price: 806,
+    oldPrice: 896,
+  },
 ];
 
 const BestOutfitDeal = () => {
@@ -65,7 +85,7 @@ const BestOutfitDeal = () => {
       </div>
 
       {/* Products Grid */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-3 mb-10">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 mb-10">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

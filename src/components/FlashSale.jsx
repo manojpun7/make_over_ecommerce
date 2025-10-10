@@ -5,6 +5,7 @@ import moisturizer from "../assets/flash-sale/moisturizer.png";
 import ring from "../assets/flash-sale/ring.png";
 import shoes from "../assets/flash-sale/shoes.png";
 import shirt from "../assets/flash-sale/shirt.png";
+
 import coupon1 from "../assets/flash-sale/1coupon.png";
 import coupon2 from "../assets/flash-sale/2coupon.png";
 import coupon3 from "../assets/flash-sale/3coupon.png";
