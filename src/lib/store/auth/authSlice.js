@@ -6,7 +6,7 @@ const initialState = {
   loading: false,
   error: null,
   success: null,
-  isEmailVerified: false, // Initial state for email verification
+  isEmailVerified: false, 
   tokens: {
     access: null,
     refresh: null,

@@ -5,11 +5,19 @@ import { useNavigate, Link } from "react-router-dom";
 import { loginUser } from "../../lib/store/auth/authThunks";
 import authImg from "./authimg.png";
 
+// Dummy Toast Hook for demonstration (Replace with actual library like react-hot-toast)
+const useToast = () => {
+  const success = (message) => console.log(`Toast SUCCESS: ${message}`);
+  const error = (message) => console.error(`Toast ERROR: ${message}`);
+  return { success, error };
+};
+
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = useToast(); // Initialize toast
 
-  const { loading, tokens } = useSelector((state) => state.auth);
+  const { loading, tokens, isEmailVerified, error } = useSelector((state) => state.auth);
 
   const [loginData, setLoginData] = useState({
     email: "",
@@ -28,14 +36,24 @@ const Login = () => {
     dispatch(loginUser(loginData));
   };
 
-  // Optional: redirect after successful login
+  // 1. Redirect after successful login
   React.useEffect(() => {
-    if (tokens.access) {
+    // Only redirect if a token is present AND the email is verified
+    if (tokens.access && isEmailVerified) {
       setTimeout(() => {
         navigate("/");
       }, 1000);
     }
-  }, [tokens, navigate]);
+  }, [tokens, isEmailVerified, navigate]);
+
+  // 2. Show toast if email is NOT verified but login was otherwise successful (token exists)
+  React.useEffect(() => {
+    if (tokens.access && !isEmailVerified) {
+      toast.error("Email not verified. Please check your inbox!");
+      // Optional: Clear the token here if you want to prevent the user from being 'logged in' until verification.
+      // E.g., dispatch(logout()); // If you have a policy to log out unverified users
+    }
+  }, [tokens.access, isEmailVerified, toast]);
 
   return (
     <div className="flex items-center justify-center p-10 bg-gradient-to-br from-pink-50 via-white to-red-50">
@@ -77,8 +95,8 @@ const Login = () => {
             </div>
 
             {/* Messages */}
-            {/* {error && <p className="text-red-500 text-sm">{error}</p>}
-            {success && <p className="text-green-500 text-sm">{success}</p>} */}
+            {/* Display Redux error if one exists */}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             {/* Submit Button */}
             <button

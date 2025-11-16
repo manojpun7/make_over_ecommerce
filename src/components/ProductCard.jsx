@@ -12,8 +12,8 @@ const ProductCard = ({ product }) => {
 
       {/* Image */}
       <img
-        src={product.image}
-        alt={product.title}
+        src={product.preview}
+        alt={product.name}
         className="w-full h-40 object-cover mb-3"
       />
 
@@ -26,12 +26,9 @@ const ProductCard = ({ product }) => {
           {product.discount}
         </p>
         <p className="text-lg font-bold text-gray-800">
-          Rs. {product.price}{" "}
-          <span className="line-through text-gray-400 text-sm ml-1">
-            Rs. {product.oldPrice}
-          </span>
+          Rs. {product.unit_price}{" "}
         </p>
-        <p className="text-sm text-gray-600 mb-3">{product.title}</p>
+        <p className="text-sm text-gray-600 mb-3">{product.name}</p>
 
         {/* Buttons aligned bottom */}
         <div className="mt-auto flex items-center gap-3">
