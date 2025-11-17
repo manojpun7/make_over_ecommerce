@@ -2,16 +2,16 @@ import React, { useState } from "react";
 import { Heart, Minus, Plus } from "lucide-react";
 
 // Example images
-import product1 from '../../assets/product/product1.png'
+
 import product2 from "../../assets/product/product2.png";
 import product3 from "../../assets/product/product3.png";
 import product4 from "../../assets/product/product4.png";
 
-const ProductDescription = () => {
+const ProductDescription = ({product}) => {
   const [quantity, setQuantity] = useState(1);
-  const [mainImage, setMainImage] = useState(product1);
+  const [mainImage, setMainImage] = useState(product.preview);
 
-  const thumbnails = [product1, product2, product3,product4];
+  const thumbnails = [product.preview, product2, product3,product4];
 
   return (
     <div className="bg-gradient-to-br from-pink-50 via-white to-red-50 py-10 px-4 sm:px-8">
@@ -41,18 +41,17 @@ const ProductDescription = () => {
         {/* Right Side - Product Info */}
         <div>
           <h1 className="text-xl sm:text-2xl font-semibold text-gray-800">
-            Ultra Smoothing Shampoo for Smooth & Shiny Hair- 250ml
+            {product.name}
           </h1>
-          <p className="text-sm text-gray-600 mt-1">
-            Niacinamide & Aloe Vera | Restores Smoothness & Texture By 37%
-          </p>
+            <p className="text-sm text-gray-600 mt-1">
+            {product.description}
+            </p>
 
           {/* Rating */}
           <div className="flex items-center mt-3">
             <span className="bg-pink-500 text-white px-2 py-0.5 rounded text-sm font-medium">
-              ★ 4.7
+              {product.rating} ★
             </span>
-            <span className="ml-2 text-sm text-gray-600">(397 Reviews)</span>
           </div>
 
           {/* Reward Points */}
@@ -63,7 +62,7 @@ const ProductDescription = () => {
           {/* Price Section */}
           <div className="mt-3">
             <p className="text-xl font-bold text-gray-800">
-              Rs. 872.00{" "}
+              Rs. {product.unit_price}{" "}
               <span className="line-through text-gray-400 text-base ml-2">
                 Rs. 952
               </span>{" "}

@@ -61,7 +61,7 @@ const HomePage = () => {
       <ProductOfDay products={products} />
       <BestBeautyProducts products={products} />
       <Accessories products={products} />
-      <BestOutfitDeal products={products} />
+      {/* <BestOutfitDeal products={products} /> */}
     </div>
   );
 };

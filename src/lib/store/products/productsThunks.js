@@ -5,7 +5,7 @@ const BASE_URL = "http://64.227.179.189:8000/api/products/";
 
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
-  async (page = 1, { rejectWithValue }) => {
+  async (page = 2, { rejectWithValue }) => {
     try {
       const res = await axios.get(`${BASE_URL}?page_number=${page}`);
       return res.data;
