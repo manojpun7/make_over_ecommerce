@@ -1,155 +1,71 @@
-import React from "react";
-import { Heart } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
-import baby from "../assets/product-of-the-day/baby.png";
-import bag from "../assets/product-of-the-day/bag.png";
-import purse from "../assets/product-of-the-day/purse.png";
-import serum from "../assets/product-of-the-day/serum.png";
-import shampoo from "../assets/product-of-the-day/shampoo.png";
-import watch from "../assets/product-of-the-day/watch.png";
-import frok from "../assets/flash-sale/frok.png";
-import hair from "../assets/flash-sale/hair.png";
-import moisturizer from "../assets/flash-sale/moisturizer.png";
-import ring from "../assets/flash-sale/ring.png";
-import shoes from "../assets/flash-sale/shoes.png";
-import shirt from "../assets/flash-sale/shirt.png";
-
-
-const products = [
-  {
-    id: 1,
-    title: "Baby Dress Set Pure Cotton",
-    image: baby,
-    rating: 4.6,
-    reviews: 311,
-    discount: "11% off",
-    price: 1126,
-    oldPrice: 1265,
-    tag: "BEST SELLER",
-  },
-  {
-    id: 2,
-    title: "Color Contrast Handbag For Female",
-    image: bag,
-    rating: 4.6,
-    reviews: 311,
-    discount: "12% off",
-    price: 492,
-    oldPrice: 599,
-  },
-  {
-    id: 3,
-    title: "Black Leather Accessories Male",
-    image: purse,
-    rating: 4.6,
-    reviews: 311,
-    discount: "7% off",
-    price: 1414,
-    oldPrice: 1520,
-  },
-  {
-    id: 4,
-    title: "Platinum Watch Set Male",
-    image: watch,
-    rating: 4.6,
-    reviews: 311,
-    discount: "10% off",
-    price: 806,
-    oldPrice: 896,
-    tag: "BEST SELLER",
-  },
-  {
-    id: 5,
-    title: "Bare Anatomy Ultra Smooth Shampoo",
-    image: shampoo,
-    rating: 4.6,
-    reviews: 311,
-    discount: "15% off",
-    price: 490,
-    oldPrice: 576,
-    tag: "BEST SELLER",
-  },
-  {
-    id: 6,
-    title: "Organic Vitamin C Serum",
-    image: serum,
-    rating: 4.6,
-    reviews: 311,
-    discount: "10% off",
-    price: 900,
-    oldPrice: 1000,
-  },
-   {
-      id: 7,
-      title: "Daily Moisturizing Lotion",
-      image: moisturizer,
-      rating: 4.6,
-      reviews: 311,
-      discount: "11% off",
-      price: 1126,
-      oldPrice: 1265,
-      tag: "BEST SELLER",
-    },
-    {
-      id: 8,
-      title: "Ladies Cotton Blue Dress",
-      image: frok,
-      rating: 4.6,
-      reviews: 311,
-      discount: "12% off",
-      price: 492,
-      oldPrice: 599,
-    },
-    {
-      id: 9,
-      title: "Ecco Men's Soft Sneaker",
-      image: shoes,
-      rating: 4.6,
-      reviews: 311,
-      discount: "7% off",
-      price: 1414,
-      oldPrice: 1520,
-    },
-    {
-      id: 10,
-      title: "Long Wavy Hair Wig",
-      image: hair,
-      rating: 4.6,
-      reviews: 311,
-      discount: "10% off",
-      price: 806,
-      oldPrice: 896,
-      tag: "BEST SELLER",
-    },
-    {
-      id: 11,
-      title: "Platinum Ring Set-6",
-      image: ring,
-      rating: 4.6,
-      reviews: 311,
-      discount: "15% off",
-      price: 490,
-      oldPrice: 576,
-      tag: "BEST SELLER",
-    },
-    {
-      id: 12,
-      title: "New Black Shirt Full Sleeve",
-      image: shirt,
-      rating: 4.6,
-      reviews: 311,
-      discount: "10% off",
-      price: 900,
-      oldPrice: 1000,
-    },
-];
+import { fetchProducts } from "../lib/store/products/productsThunks";
 
 const MoreProducts = () => {
+  const dispatch = useDispatch();
+  const { products, loading, count } = useSelector((state) => state.products);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const totalPages = Math.ceil(count / 10); // backend returns total count
+
+  // Pagination window size
+  const pageWindow = 5;
+  const [windowStart, setWindowStart] = useState(1);
+
+  useEffect(() => {
+    dispatch(fetchProducts(currentPage));
+  }, [currentPage, dispatch]);
+
+  // Compute visible pages
+  const getVisiblePages = () => {
+    const end = Math.min(windowStart + pageWindow - 1, totalPages);
+    const pages = [];
+    for (let i = windowStart; i <= end; i++) pages.push(i);
+    return pages;
+  };
+
+  // Handle previous / next
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      const newPage = currentPage - 1;
+      if (newPage < windowStart) setWindowStart((w) => w - pageWindow);
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      const newPage = currentPage + 1;
+      if (newPage > windowStart + pageWindow - 1)
+        setWindowStart((w) => w + pageWindow);
+      setCurrentPage(newPage);
+    }
+  };
+
+  const handlePageClick = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <div className="flex bg-gradient-to-br from-pink-50 via-white to-red-50 min-h-screen p-6">
-      {/* Sidebar */}
+      {/* ---------------- Sidebar ---------------- */}
       <aside className="w-64 pr-6 hidden md:block">
         <div className="space-y-6 text-gray-700">
+          <div>
+            <label className="block text-sm mb-1">Search:</label>
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="w-full border rounded-lg px-3 py-2 text-sm"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+
           <div>
             <label className="block text-sm mb-1">Sort By:</label>
             <select className="w-full border rounded-lg px-3 py-2 text-sm">
@@ -183,7 +99,7 @@ const MoreProducts = () => {
         </div>
       </aside>
 
-      {/* Product Grid */}
+      {/* ---------------- Main ---------------- */}
       <main className="flex-1">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-800">More Products</h2>
@@ -194,10 +110,61 @@ const MoreProducts = () => {
           </select>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-             <ProductCard key={product.id} product={product} />
+        {loading && (
+          <p className="text-gray-600 text-center py-10">Loading products...</p>
+        )}
+
+        {!loading && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
+
+        {/* ---------------- Sliding Pagination ---------------- */}
+        <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
+          <button
+            onClick={handlePrevious}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-lg border ${
+              currentPage === 1
+                ? "bg-gray-200 cursor-not-allowed"
+                : "bg-white hover:bg-gray-100"
+            }`}
+          >
+            Previous
+          </button>
+
+          {getVisiblePages().map((num) => (
+            <button
+              key={num}
+              onClick={() => handlePageClick(num)}
+              className={`px-4 py-2 rounded-lg border ${
+                currentPage === num
+                  ? "bg-red-500 text-white font-semibold"
+                  : "bg-white hover:bg-gray-100"
+              }`}
+            >
+              {num}
+            </button>
           ))}
+
+          {windowStart + pageWindow - 1 < totalPages && (
+            <span className="px-2">...</span>
+          )}
+
+          <button
+            onClick={handleNext}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-lg border ${
+              currentPage === totalPages
+                ? "bg-gray-200 cursor-not-allowed"
+                : "bg-white hover:bg-gray-100"
+            }`}
+          >
+            Next
+          </button>
         </div>
       </main>
     </div>

@@ -16,7 +16,6 @@ const BestBeautyProducts = () => {
   const beautyProducts = products?.filter(
     (product) => product.category?.name === "Beauty"
   );
-  console.log("beauty products", beautyProducts);
 
   if (loading) return <p>Loading...</p>;
 

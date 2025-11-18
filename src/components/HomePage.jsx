@@ -39,6 +39,9 @@ const HomePage = () => {
 
   const { products, loading, error } = useSelector((state) => state.products);
 
+
+  console.log("from the homepage product",products);
+
   // 🔥 FETCH PRODUCTS WHEN HOMEPAGE LOADS
   useEffect(() => {
     dispatch(fetchProducts()); // only runs on "/"

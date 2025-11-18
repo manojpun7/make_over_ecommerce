@@ -8,6 +8,7 @@ const initialState = {
   next: null,
   previous: null,
   count: 0,
+  currentPage: 1,
 };
 
 const productsSlice = createSlice({
@@ -28,6 +29,7 @@ const productsSlice = createSlice({
         state.next = action.payload.next;
         state.previous = action.payload.previous;
         state.count = action.payload.count;
+        state.currentPage = action.payload.page;
       })
 
       .addCase(fetchProducts.rejected, (state, action) => {
