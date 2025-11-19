@@ -1,10 +1,11 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
 const Accessories = () => {
-   const { products, loading } = useSelector((state) => state.products);
+  const { products, loading } = useSelector((state) => state.products);
 
   // 🔥 Pick only 6 items (could be featured or random)
   const flashProducts = [...products]
@@ -15,14 +16,11 @@ const Accessories = () => {
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
-          Product Of The Day
+          Accessories
         </h2>
-        <a
-          href="#"
-          className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center"
-        >
+        <Link to={'/products'} className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center">
           Explore All <span className="ml-1">➝</span>
-        </a>
+        </Link>
         {loading && <p>loading items....</p>}
       </div>
 

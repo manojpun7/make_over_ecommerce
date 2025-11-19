@@ -1,6 +1,7 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
 const ProductOfDay = () => {
@@ -18,12 +19,9 @@ const ProductOfDay = () => {
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
           Product Of The Day
         </h2>
-        <a
-          href="#"
-          className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center"
-        >
+       <Link to={'/products'} className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center">
           Explore All <span className="ml-1">➝</span>
-        </a>
+        </Link>
         {/* Loading State */}
         {loading && <p className="text-center text-lg">Loading Product of the Day...</p>}
       </div>

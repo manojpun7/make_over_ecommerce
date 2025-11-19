@@ -9,6 +9,7 @@ import coupon1 from "../assets/flash-sale/1coupon.png";
 import coupon2 from "../assets/flash-sale/2coupon.png";
 import coupon3 from "../assets/flash-sale/3coupon.png";
 import coupon4 from "../assets/flash-sale/4coupon.png";
+import { Link } from "react-router-dom";
 
 const FlashSale = () => {
   const { products, loading } = useSelector((state) => state.products);
@@ -24,9 +25,9 @@ const FlashSale = () => {
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
           Flash Sale
         </h2>
-        <a href="#" className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center">
+        <Link to={'/products'} className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center">
           Explore All <span className="ml-1">➝</span>
-        </a>
+        </Link>
       </div>
 
       {/* Loading State */}

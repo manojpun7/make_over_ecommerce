@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
-import { fetchProducts } from "../lib/store/products/productsThunks";
+import { searchProducts } from "../lib/store/searchProducts/searchProductsThunks";
+
+let debounceTimeout;
 
 const MoreProducts = () => {
   const dispatch = useDispatch();
-  const { products, loading, count } = useSelector((state) => state.products);
+  const { products, loading, count } = useSelector(
+    (state) => state.searchProducts
+  );
 
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-
-  const totalPages = Math.ceil(count / 10); // backend returns total count
-
-  // Pagination window size
-  const pageWindow = 5;
   const [windowStart, setWindowStart] = useState(1);
 
-  useEffect(() => {
-    dispatch(fetchProducts(currentPage));
-  }, [currentPage, dispatch]);
+  const [sort, setSort] = useState("");
+  const [category, setCategory] = useState("");
+  const [priceRange, setPriceRange] = useState("");
 
-  // Compute visible pages
+  const totalPages = Math.ceil(count / 10);
+  const pageWindow = 5;
+
   const getVisiblePages = () => {
     const end = Math.min(windowStart + pageWindow - 1, totalPages);
     const pages = [];
@@ -28,7 +29,38 @@ const MoreProducts = () => {
     return pages;
   };
 
-  // Handle previous / next
+  const fetchData = React.useCallback(() => {
+    dispatch(
+      searchProducts({
+        page: currentPage,
+        search: searchTerm,
+        sort,
+        category,
+        priceRange,
+      })
+    );
+  }, [dispatch, currentPage, searchTerm, sort, category, priceRange]);
+
+
+  // ---------------- Debounce search input ----------------
+  useEffect(() => {
+    clearTimeout(debounceTimeout);
+
+    debounceTimeout = setTimeout(() => {
+      setCurrentPage(1);
+      setWindowStart(1);
+    }, 800);
+
+    return () => clearTimeout(debounceTimeout);
+  }, [searchTerm]);
+
+
+
+  // ---------------- Fetch when any state changes ----------------
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
   const handlePrevious = () => {
     if (currentPage > 1) {
       const newPage = currentPage - 1;
@@ -46,15 +78,14 @@ const MoreProducts = () => {
     }
   };
 
-  const handlePageClick = (page) => {
-    setCurrentPage(page);
-  };
-
   return (
     <div className="flex bg-gradient-to-br from-pink-50 via-white to-red-50 min-h-screen p-6">
+
       {/* ---------------- Sidebar ---------------- */}
       <aside className="w-64 pr-6 hidden md:block">
         <div className="space-y-6 text-gray-700">
+
+          {/* Search */}
           <div>
             <label className="block text-sm mb-1">Search:</label>
             <input
@@ -66,55 +97,67 @@ const MoreProducts = () => {
             />
           </div>
 
+          {/* Sort */}
           <div>
             <label className="block text-sm mb-1">Sort By:</label>
-            <select className="w-full border rounded-lg px-3 py-2 text-sm">
-              <option>Default</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-              <option>Newest</option>
+            <select
+              className="w-full border rounded-lg px-3 py-2 text-sm"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
+              <option value="">Default</option>
+              <option value="asc">Price: Low to High</option>
+              <option value="desc">Price: High to Low</option>
+              <option value="newest">Newest</option>
             </select>
           </div>
 
+          {/* Category */}
           <div>
             <label className="block text-sm mb-1">Category:</label>
-            <select className="w-full border rounded-lg px-3 py-2 text-sm">
-              <option>All Categories</option>
-              <option>Men</option>
-              <option>Women</option>
-              <option>Kids</option>
-              <option>Beauty</option>
+            <select
+              className="w-full border rounded-lg px-3 py-2 text-sm"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="">All Categories</option>
+              <option value="Men">Men</option>
+              <option value="Women">Women</option>
+              <option value="Kids">Kids</option>
+              <option value="Beauty">Beauty</option>
             </select>
           </div>
 
+          {/* Price Range */}
           <div>
             <label className="block text-sm mb-1">Price Range:</label>
-            <select className="w-full border rounded-lg px-3 py-2 text-sm">
-              <option>All Price Ranges</option>
-              <option>Under Rs. 1000</option>
-              <option>Rs. 1000 - 2000</option>
-              <option>Above Rs. 2000</option>
+            <select
+              className="w-full border rounded-lg px-3 py-2 text-sm"
+              value={priceRange}
+              onChange={(e) => setPriceRange(e.target.value)}
+            >
+              <option value="">All Price Ranges</option>
+              <option value="0-1000">Under Rs. 1000</option>
+              <option value="1000-2000">Rs. 1000 - 2000</option>
+              <option value="2000+">Above Rs. 2000</option>
             </select>
           </div>
+
         </div>
       </aside>
 
-      {/* ---------------- Main ---------------- */}
+      {/* ---------------- Main Content ---------------- */}
       <main className="flex-1">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-800">More Products</h2>
-          <select className="border rounded-lg px-3 py-2 text-sm">
-            <option>Best Match</option>
-            <option>Price: Low to High</option>
-            <option>Price: High to Low</option>
-          </select>
-        </div>
 
         {loading && (
           <p className="text-gray-600 text-center py-10">Loading products...</p>
         )}
 
-        {!loading && (
+        {!loading && products.length === 0 && (
+          <p className="text-gray-600 text-center py-10">No products found.</p>
+        )}
+
+        {!loading && products.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {products.map((product) => (
               <ProductCard key={product.id} product={product} />
@@ -122,50 +165,55 @@ const MoreProducts = () => {
           </div>
         )}
 
-        {/* ---------------- Sliding Pagination ---------------- */}
-        <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
-          <button
-            onClick={handlePrevious}
-            disabled={currentPage === 1}
-            className={`px-4 py-2 rounded-lg border ${
-              currentPage === 1
+        {/* ---------------- Pagination ---------------- */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
+
+            {/* Previous */}
+            <button
+              onClick={handlePrevious}
+              disabled={currentPage === 1}
+              className={`px-4 py-2 rounded-lg border ${currentPage === 1
                 ? "bg-gray-200 cursor-not-allowed"
                 : "bg-white hover:bg-gray-100"
-            }`}
-          >
-            Previous
-          </button>
+                }`}
+            >
+              Previous
+            </button>
 
-          {getVisiblePages().map((num) => (
-            <button
-              key={num}
-              onClick={() => handlePageClick(num)}
-              className={`px-4 py-2 rounded-lg border ${
-                currentPage === num
+            {/* Page Numbers */}
+            {getVisiblePages().map((num) => (
+              <button
+                key={num}
+                onClick={() => setCurrentPage(num)}
+                className={`px-4 py-2 rounded-lg border ${currentPage === num
                   ? "bg-red-500 text-white font-semibold"
                   : "bg-white hover:bg-gray-100"
-              }`}
-            >
-              {num}
-            </button>
-          ))}
+                  }`}
+              >
+                {num}
+              </button>
+            ))}
 
-          {windowStart + pageWindow - 1 < totalPages && (
-            <span className="px-2">...</span>
-          )}
+            {windowStart + pageWindow - 1 < totalPages && (
+              <span className="px-2">...</span>
+            )}
 
-          <button
-            onClick={handleNext}
-            disabled={currentPage === totalPages}
-            className={`px-4 py-2 rounded-lg border ${
-              currentPage === totalPages
+            {/* Next */}
+            <button
+              onClick={handleNext}
+              disabled={currentPage === totalPages}
+              className={`px-4 py-2 rounded-lg border ${currentPage === totalPages
                 ? "bg-gray-200 cursor-not-allowed"
                 : "bg-white hover:bg-gray-100"
-            }`}
-          >
-            Next
-          </button>
-        </div>
+                }`}
+            >
+              Next
+            </button>
+
+          </div>
+        )}
+
       </main>
     </div>
   );
