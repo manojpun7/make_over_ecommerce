@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "../lib/store/category/categoryThunks";
+import React  from "react";
+import {  useSelector } from "react-redux";
+
 
 const HeroPage = () => {
-  const dispatch = useDispatch();
 
   // Get products and categories from Redux store
   const { products, loading: productsLoading } = useSelector(
@@ -14,9 +13,6 @@ const HeroPage = () => {
   );
 
   // Fetch categories on mount
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
 
   // Filter featured products for hero carousel
   const featuredProducts =

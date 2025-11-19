@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProductCard from "./ProductCard";
 import { searchProducts } from "../lib/store/searchProducts/searchProductsThunks";
+import { fetchCategories } from "../lib/store/category/categoryThunks";
 
 let debounceTimeout;
 
@@ -9,6 +10,9 @@ const MoreProducts = () => {
   const dispatch = useDispatch();
   const { products, loading, count } = useSelector(
     (state) => state.searchProducts
+  );
+  const { categories, loading: categoriesLoading } = useSelector(
+    (state) => state.categories
   );
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -41,6 +45,12 @@ const MoreProducts = () => {
     );
   }, [dispatch, currentPage, searchTerm, sort, category, priceRange]);
 
+  // ---------------- Fetch categories if not in state ----------------
+  useEffect(() => {
+    if (!categories || categories.length === 0) {
+      dispatch(fetchCategories());
+    }
+  }, [categories, dispatch]);
 
   // ---------------- Debounce search input ----------------
   useEffect(() => {
@@ -54,9 +64,7 @@ const MoreProducts = () => {
     return () => clearTimeout(debounceTimeout);
   }, [searchTerm]);
 
-
-
-  // ---------------- Fetch when any state changes ----------------
+  // ---------------- Fetch products when any state changes ----------------
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -80,11 +88,9 @@ const MoreProducts = () => {
 
   return (
     <div className="flex bg-gradient-to-br from-pink-50 via-white to-red-50 min-h-screen p-6">
-
-      {/* ---------------- Sidebar ---------------- */}
+      {/* Sidebar */}
       <aside className="w-64 pr-6 hidden md:block">
         <div className="space-y-6 text-gray-700">
-
           {/* Search */}
           <div>
             <label className="block text-sm mb-1">Search:</label>
@@ -115,17 +121,22 @@ const MoreProducts = () => {
           {/* Category */}
           <div>
             <label className="block text-sm mb-1">Category:</label>
-            <select
-              className="w-full border rounded-lg px-3 py-2 text-sm"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            >
-              <option value="">All Categories</option>
-              <option value="Men">Men</option>
-              <option value="Women">Women</option>
-              <option value="Kids">Kids</option>
-              <option value="Beauty">Beauty</option>
-            </select>
+            {categoriesLoading ? (
+              <p>Loading categories...</p>
+            ) : (
+              <select
+                className="w-full border rounded-lg px-3 py-2 text-sm"
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+              >
+                <option value="">All Categories</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
           {/* Price Range */}
@@ -142,13 +153,11 @@ const MoreProducts = () => {
               <option value="2000+">Above Rs. 2000</option>
             </select>
           </div>
-
         </div>
       </aside>
 
-      {/* ---------------- Main Content ---------------- */}
+      {/* Main Content */}
       <main className="flex-1">
-
         {loading && (
           <p className="text-gray-600 text-center py-10">Loading products...</p>
         )}
@@ -165,31 +174,30 @@ const MoreProducts = () => {
           </div>
         )}
 
-        {/* ---------------- Pagination ---------------- */}
+        {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
-
-            {/* Previous */}
             <button
               onClick={handlePrevious}
               disabled={currentPage === 1}
-              className={`px-4 py-2 rounded-lg border ${currentPage === 1
-                ? "bg-gray-200 cursor-not-allowed"
-                : "bg-white hover:bg-gray-100"
-                }`}
+              className={`px-4 py-2 rounded-lg border ${
+                currentPage === 1
+                  ? "bg-gray-200 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-100"
+              }`}
             >
               Previous
             </button>
 
-            {/* Page Numbers */}
             {getVisiblePages().map((num) => (
               <button
                 key={num}
                 onClick={() => setCurrentPage(num)}
-                className={`px-4 py-2 rounded-lg border ${currentPage === num
-                  ? "bg-red-500 text-white font-semibold"
-                  : "bg-white hover:bg-gray-100"
-                  }`}
+                className={`px-4 py-2 rounded-lg border ${
+                  currentPage === num
+                    ? "bg-red-500 text-white font-semibold"
+                    : "bg-white hover:bg-gray-100"
+                }`}
               >
                 {num}
               </button>
@@ -199,21 +207,19 @@ const MoreProducts = () => {
               <span className="px-2">...</span>
             )}
 
-            {/* Next */}
             <button
               onClick={handleNext}
               disabled={currentPage === totalPages}
-              className={`px-4 py-2 rounded-lg border ${currentPage === totalPages
-                ? "bg-gray-200 cursor-not-allowed"
-                : "bg-white hover:bg-gray-100"
-                }`}
+              className={`px-4 py-2 rounded-lg border ${
+                currentPage === totalPages
+                  ? "bg-gray-200 cursor-not-allowed"
+                  : "bg-white hover:bg-gray-100"
+              }`}
             >
               Next
             </button>
-
           </div>
         )}
-
       </main>
     </div>
   );

@@ -11,32 +11,50 @@ import logo from "../assets/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, setUserFromStorage } from "../lib/store/auth/authSlice";
 
-const IconButton = ({ icon: Icon, text }) => (
-  <Link
-    to="#"
-    className="flex items-center space-x-2 text-gray-700 hover:text-pink-500 transition-colors"
-  >
-    <Icon size={20} />
-    <span className="text-lg">{text}</span>
-  </Link>
-);
+// IconButton component with optional `to` for navigation
+const IconButton = ({ icon: Icon, text, to, onClick }) => {
+  if (to) {
+    return (
+      <Link
+        to={to}
+        className="flex items-center space-x-2 text-gray-700 hover:text-pink-500 transition-colors"
+      >
+        <Icon size={20} />
+        <span className="text-lg">{text}</span>
+      </Link>
+    );
+  }
+
+  return (
+
+    <button
+      onClick={onClick}
+      className="flex items-center space-x-2 text-gray-700 hover:text-pink-500 transition-colors"
+    >
+      <Icon size={20} />
+      <span className="text-lg">{text}</span>
+    </button>
+  );
+};
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  
-  // Before (in original code)
-  const user = useSelector((state) => state.auth.user);
 
-  // After (in optimized code)
+  const user = useSelector((state) => state.auth.user);
+  const cartitems = useSelector((state) => state.cart.items);
+  const cartCount = cartitems.length
+
+
+
   useEffect(() => {
     const storedEmail = localStorage.getItem("user_email");
-    // Only dispatch if user is null AND email exists in storage
     if (!user && storedEmail) {
       dispatch(setUserFromStorage(storedEmail));
     }
   }, [dispatch, user]);
+
   const handleLogout = () => {
     dispatch(logout());
     navigate("/auth/login");
@@ -45,8 +63,11 @@ const Navbar = () => {
   return (
     <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="flex justify-between items-center py-2 px-10">
-        {/* 👇 Clickable Logo */}
-        <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="flex items-center space-x-3 hover:opacity-80 transition"
+        >
           <img src={logo} alt="Makeover Me" className="h-10 w-auto" />
           <div className="hidden sm:block leading-tight">
             <p className="font-bold text-lg text-pink-400">Makeover Me</p>
@@ -58,12 +79,12 @@ const Navbar = () => {
         <div className="hidden md:flex items-center space-x-10">
           <IconButton icon={Download} text="Download App" />
           <IconButton icon={BadgePercent} text="Offers" />
-          <IconButton icon={ShoppingCart} text="Cart" />
+          {/* Cart navigates to /cart */}
+          <IconButton icon={ShoppingCart} text={`Cart (${cartCount})`} to="/cart" />
 
           {/* User Section */}
           <div className="flex items-center space-x-3">
             <div className="w-6 h-6 bg-pink-500 rounded-full"></div>
-
             {user ? (
               <>
                 <span className="text-lg text-gray-600">
@@ -95,6 +116,8 @@ const Navbar = () => {
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
+
+      {/* You can add mobile menu content here if needed */}
     </nav>
   );
 };

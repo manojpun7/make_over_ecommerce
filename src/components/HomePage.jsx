@@ -33,6 +33,7 @@ import ProductOfDay from "./ProductOfDay";
 import BestBeautyProducts from "./BestBeautyProducts";
 import Accessories from "./Accessories";
 import BestOutfitDeal from "./BestOutfitDeal";
+import { fetchCategories } from "../lib/store/category/categoryThunks.js";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -40,12 +41,18 @@ const HomePage = () => {
   const { products, loading, error } = useSelector((state) => state.products);
 
 
-  console.log("from the homepage product",products);
+  console.log("from the homepage product", products);
 
   // 🔥 FETCH PRODUCTS WHEN HOMEPAGE LOADS
   useEffect(() => {
     dispatch(fetchProducts()); // only runs on "/"
   }, [dispatch]);
+
+  
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
 
   return (
     <div>

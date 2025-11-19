@@ -7,7 +7,7 @@ export const signupUser = createAsyncThunk(
   async (signupData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://18.208.251.169:8000/api/auth/signup/",
+        "http://64.227.179.189:8000/api/auth/signup/",
         {
           email: signupData.email,
           contact: signupData.contact,
@@ -37,7 +37,7 @@ export const loginUser = createAsyncThunk(
   async (loginData, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        "http://18.208.251.169:8000/api/auth/login/",
+        "http://64.227.179.189:8000/api/auth/login/",
         loginData
       );
 
