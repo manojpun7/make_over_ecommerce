@@ -66,7 +66,7 @@ const authSlice = createSlice({
         state.tokens = action.payload.tokens;
         state.user = { email: action.meta.arg.email };
         localStorage.setItem("user_email", action.meta.arg.email);
-        // NOTE: You might also set isEmailVerified here if your login API
+        // NOTE: You might also set isEmailVerified here if your login APIw
         // returns the verification status of the user (e.g., action.payload.isVerified)
       })
       .addCase(loginUser.rejected, (state, action) => {

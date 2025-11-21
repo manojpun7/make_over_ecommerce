@@ -1,26 +1,3 @@
-// import React from "react";
-// import HeroPage from "./HeroPage";
-// import FlashSale from "./FlashSale";
-// import ProductOfDay from "./ProductOfDay";
-// import BestBeautyProducts from "./BestBeautyProducts";
-// import Accessories from "./Accessories";
-// import BestOutfitDeal from "./BestOutfitDeal";
-
-// const HomePage = () => {
-//   return (
-//     <div>
-//       <HeroPage />
-//       <FlashSale />
-//       <ProductOfDay />
-//       <BestBeautyProducts />
-//       <Accessories />
-//       <BestOutfitDeal />
-//     </div>
-//   );
-// };
-
-// export default HomePage;
-
 
 
 import React, { useEffect } from "react";
@@ -34,6 +11,7 @@ import BestBeautyProducts from "./BestBeautyProducts";
 import Accessories from "./Accessories";
 import BestOutfitDeal from "./BestOutfitDeal";
 import { fetchCategories } from "../lib/store/category/categoryThunks.js";
+import { fetchFlashSales } from "../lib/store/products/flash-sale/flashSaleThunk.js";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -53,6 +31,11 @@ const HomePage = () => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  
+  useEffect(() => {
+    dispatch(fetchFlashSales());
+  }, [dispatch]);
+
 
   return (
     <div>
@@ -67,7 +50,7 @@ const HomePage = () => {
 
       {/* Pass products to sections if needed */}
       <HeroPage />
-      <FlashSale products={products} />       {/* Example */}
+      <FlashSale />       {/* Example */}
       <ProductOfDay products={products} />
       <BestBeautyProducts products={products} />
       <Accessories products={products} />

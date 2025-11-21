@@ -12,10 +12,10 @@ import coupon4 from "../assets/flash-sale/4coupon.png";
 import { Link } from "react-router-dom";
 
 const FlashSale = () => {
-  const { products, loading } = useSelector((state) => state.products);
+  const { items, loading } = useSelector((state) => state.flashSales);
 
   // 🔥 Pick only 6 items (could be featured or random)
-  const flashProducts = products.slice(0, 6);
+  const flashProducts = items.slice(0, 6);
 
   return (
     <div className="bg-gradient-to-br from-pink-50 via-white to-red-50 py-10 px-4 sm:px-8">

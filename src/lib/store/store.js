@@ -4,6 +4,7 @@ import productsReducer from "../store/products/productsSlice.js";
 import searchProductsReducer from '../store/searchProducts/searchProductsSlice.js'
 import categoryReducer from '../store/category/categorySlice.js'
 import cartReducer from '../store/cart/cartSlice.js'
+import flashSalesReducer from '../store/products/flash-sale/flashSaleSlice.js'
 
 export const store = configureStore({
   reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
     products: productsReducer,
     searchProducts: searchProductsReducer,
     categories: categoryReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    flashSales: flashSalesReducer
 
   },
 });
