@@ -1,31 +1,40 @@
 import React from "react";
 import { ChevronRight } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
-const BeautyProductCard = ({ brand }) => {
+const BeautyProductCard = ({ product }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/products/${product.slug}`);
+  };
+
   return (
-    <div className="bg-white rounded-xl shadow-sm hover:drop-shadow-2xl border-pink-600 transition-all duration-300 overflow-hidden flex flex-col">
+    <div
+      onClick={handleClick}
+      className="cursor-pointer bg-white rounded-xl shadow-sm hover:drop-shadow-2xl border-pink-600 transition-all duration-300 overflow-hidden flex flex-col"
+    >
+      {/* Product Image */}
       <div className="h-36 sm:h-40 md:h-44 lg:h-48 bg-gray-100 flex items-center justify-center">
-        
         <img
-          src={brand.preview ? brand.preview : "/src/assets/image4.png"}
+          src={product.preview ? product.preview : "/src/assets/image4.png"}
           onError={(e) => (e.target.src = "/src/assets/image4.png")}
-          alt={brand.name}
+          alt={product.name}
           className="object-contain max-h-full"
         />
-
       </div>
 
+      {/* Product Info */}
       <div className="p-3 flex flex-col justify-between flex-1 bg-pink-100">
         <div className="flex justify-evenly items-center">
           <p className="text-pink-500 font-semibold text-sm sm:text-base">
-            Rs.{brand.unit_price}
+            Rs.{product.unit_price}
           </p>
-          <p className="text-xs sm:text-sm text-gray-600">{brand.subtitle}</p>
+          <p className="text-xs sm:text-sm text-gray-600">{product.subtitle}</p>
 
           <button className="flex items-center justify-center bg-pink-500 text-white rounded-md px-1 py-2 text-sm hover:bg-pink-600 transition">
             <ChevronRight size={16} className="ml-1" />
           </button>
-
         </div>
       </div>
     </div>

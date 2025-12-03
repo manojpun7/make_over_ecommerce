@@ -1,18 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-const BASE_URL = "http://64.227.179.189:8000/api/products/";
-
+// searchProductsThunks.js
 export const searchProducts = createAsyncThunk(
-  "searchProducts/searchProducts",
-  async ({ page = 1, search = "" }, { rejectWithValue }) => {
+  "searchProducts/fetch",
+  async ({ page = 1, search = "", sort = "", category = "", priceRange = "" }, { rejectWithValue }) => {
     try {
-      const res = await axios.get(
-        `${BASE_URL}?page_number=${page}&search=${search}`
-      );
-      return res.data;
+      let url = `http://64.227.179.189:8000/api/products/?page_number=${page}`;
+
+      if (search) url += `&search=${search}`;
+      if (sort) url += `&sort=${sort}`;
+      if (category) url += `&category=${category}`; // <-- category slug here
+      if (priceRange) url += `&price_range=${priceRange}`;
+
+      const response = await axios.get(url);
+      return response.data;
     } catch (err) {
-      return rejectWithValue(err.response?.data || "Failed to fetch products");
+      return rejectWithValue(err.response?.data || "Something went wrong");
     }
   }
 );

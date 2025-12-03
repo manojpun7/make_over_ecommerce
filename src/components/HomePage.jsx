@@ -24,19 +24,21 @@ const HomePage = () => {
 
   // 🔥 FETCH PRODUCTS WHEN HOMEPAGE LOADS
   useEffect(() => {
-    dispatch(fetchProducts()); // only runs on "/"
-  }, [dispatch]);
+    if (!products || products.length === 0) {
+      dispatch(fetchProducts());
+    }
+  }, [dispatch, products]);
 
-  
+
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
-  
+
   useEffect(() => {
     dispatch(fetchFlashSales());
   }, [dispatch]);
-  
+
   useEffect(() => {
     dispatch(fetchProductOfTheDay());
   }, [dispatch]);
@@ -56,7 +58,7 @@ const HomePage = () => {
       {/* Pass products to sections if needed */}
       <HeroPage />
       <FlashSale />       {/* Example */}
-      <ProductOfDay  />
+      <ProductOfDay />
       <BestBeautyProducts products={products} />
       <Accessories products={products} />
       {/* <BestOutfitDeal products={products} /> */}

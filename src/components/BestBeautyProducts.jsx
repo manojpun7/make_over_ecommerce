@@ -5,7 +5,6 @@ import { fetchProducts } from "../lib/store/products/productsThunks.js"; // adju
 
 const BestBeautyProducts = () => {
   const dispatch = useDispatch();
-
   const { products, loading } = useSelector((state) => state.products);
 
   useEffect(() => {
@@ -18,6 +17,8 @@ const BestBeautyProducts = () => {
   );
 
   if (loading) return <p>Loading...</p>;
+  if (!beautyProducts || beautyProducts.length === 0)
+    return <p>No beauty products found.</p>;
 
   return (
     <div className="bg-gradient-to-br from-pink-50 via-white to-red-50 py-10 px-4 sm:px-8">
@@ -28,8 +29,8 @@ const BestBeautyProducts = () => {
 
       {/* Grid */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 lg:grid-cols-3">
-        {beautyProducts?.map((product) => (
-          <BeautyProductCard key={product.id} brand={product} />
+        {beautyProducts.map((product) => (
+          <BeautyProductCard key={product.id} product={product} />
         ))}
       </div>
     </div>
