@@ -1,5 +1,5 @@
-import React  from "react";
-import {  useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
 
 const HeroPage = () => {
@@ -48,13 +48,15 @@ const HeroPage = () => {
                 className="flex flex-col items-center p-4 rounded-xl hover:bg-white hover:shadow-lg transition-all"
               >
                 <img
-                  src={category.image}
+                  src={category.image ? category.image : "/src/assets/men.png"}
+                  onError={(e) => (e.target.src = "/src/assets/men.png")}
                   alt={category.name}
                   className="w-20 h-20 mb-2 object-cover rounded-full"
                 />
                 <p className="text-sm font-medium text-gray-800">{category.name}</p>
               </div>
             ))}
+
           </div>
         </div>
       </div>

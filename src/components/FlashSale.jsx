@@ -25,9 +25,10 @@ const FlashSale = () => {
         <h2 className="text-xl sm:text-2xl font-semibold text-gray-800">
           Flash Sale
         </h2>
-        <Link to={'/products'} className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center">
+        <Link to="/flash-sales/" className="text-pink-500 text-sm sm:text-base font-medium hover:underline flex items-center">
           Explore All <span className="ml-1">➝</span>
         </Link>
+
       </div>
 
       {/* Loading State */}

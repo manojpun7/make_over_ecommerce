@@ -12,6 +12,7 @@ import Accessories from "./Accessories";
 import BestOutfitDeal from "./BestOutfitDeal";
 import { fetchCategories } from "../lib/store/category/categoryThunks.js";
 import { fetchFlashSales } from "../lib/store/products/flash-sale/flashSaleThunk.js";
+import { fetchProductOfTheDay } from "../lib/store/products/product-of-the-day/productOfTheDayThunk.js";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,10 @@ const HomePage = () => {
   useEffect(() => {
     dispatch(fetchFlashSales());
   }, [dispatch]);
+  
+  useEffect(() => {
+    dispatch(fetchProductOfTheDay());
+  }, [dispatch]);
 
 
   return (
@@ -51,7 +56,7 @@ const HomePage = () => {
       {/* Pass products to sections if needed */}
       <HeroPage />
       <FlashSale />       {/* Example */}
-      <ProductOfDay products={products} />
+      <ProductOfDay  />
       <BestBeautyProducts products={products} />
       <Accessories products={products} />
       {/* <BestOutfitDeal products={products} /> */}

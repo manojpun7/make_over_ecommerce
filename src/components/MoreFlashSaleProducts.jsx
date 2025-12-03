@@ -1,0 +1,207 @@
+// import React, { useEffect, useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import ProductCard from "./ProductCard";
+// import { searchProducts } from "../lib/store/searchProducts/searchProductsThunks";
+
+// let debounceTimeout;
+
+// const MoreFlashSaleProducts = () => {
+//   const dispatch = useDispatch();
+//   const { items, loading, count } = useSelector(
+//     (state) => state.searchProducts
+//   );
+ 
+
+//   const [searchTerm, setSearchTerm] = useState("");
+//   const [currentPage, setCurrentPage] = useState(1);
+//   const [windowStart, setWindowStart] = useState(1);
+
+//   const [sort, setSort] = useState("");
+//   const [priceRange, setPriceRange] = useState("");
+
+//   const totalPages = Math.ceil(count / 10);
+//   const pageWindow = 5;
+
+//   const getVisiblePages = () => {
+//     const end = Math.min(windowStart + pageWindow - 1, totalPages);
+//     const pages = [];
+//     for (let i = windowStart; i <= end; i++) pages.push(i);
+//     return pages;
+//   };
+
+//   const fetchData = React.useCallback(() => {
+//     dispatch(
+//       searchProducts({
+//         page: currentPage,
+//         search: searchTerm,
+//         sort,
+//         priceRange,
+//       })
+//     );
+//   }, [dispatch, currentPage, searchTerm, sort, priceRange]);
+
+
+
+//   // ---------------- Debounce search input ----------------
+//   useEffect(() => {
+//     clearTimeout(debounceTimeout);
+
+//     debounceTimeout = setTimeout(() => {
+//       setCurrentPage(1);
+//       setWindowStart(1);
+//     }, 800);
+
+//     return () => clearTimeout(debounceTimeout);
+//   }, [searchTerm]);
+
+//   // ---------------- Fetch items when any state changes ----------------
+//   useEffect(() => {
+//     fetchData();
+//   }, [fetchData]);
+
+//   const handlePrevious = () => {
+//     if (currentPage > 1) {
+//       const newPage = currentPage - 1;
+//       if (newPage < windowStart) setWindowStart((w) => w - pageWindow);
+//       setCurrentPage(newPage);
+//     }
+//   };
+
+//   const handleNext = () => {
+//     if (currentPage < totalPages) {
+//       const newPage = currentPage + 1;
+//       if (newPage > windowStart + pageWindow - 1)
+//         setWindowStart((w) => w + pageWindow);
+//       setCurrentPage(newPage);
+//     }
+//   };
+
+//   return (
+//     <div className="flex bg-gradient-to-br from-pink-50 via-white to-red-50 min-h-screen p-6">
+//       {/* Sidebar */}
+//       <aside className="w-64 pr-6 hidden md:block">
+//         <div className="space-y-6 text-gray-700">
+//           {/* Search */}
+//           <div>
+//             <label className="block text-sm mb-1">Search:</label>
+//             <input
+//               type="text"
+//               placeholder="Search items..."
+//               className="w-full border rounded-lg px-3 py-2 text-sm"
+//               value={searchTerm}
+//               onChange={(e) => setSearchTerm(e.target.value)}
+//             />
+//           </div>
+
+//           {/* Sort */}
+//           <div>
+//             <label className="block text-sm mb-1">Sort By:</label>
+//             <select
+//               className="w-full border rounded-lg px-3 py-2 text-sm"
+//               value={sort}
+//               onChange={(e) => setSort(e.target.value)}
+//             >
+//               <option value="">Default</option>
+//               <option value="asc">Price: Low to High</option>
+//               <option value="desc">Price: High to Low</option>
+//               <option value="newest">Newest</option>
+//             </select>
+//           </div>
+
+//           {/* Price Range */}
+//           <div>
+//             <label className="block text-sm mb-1">Price Range:</label>
+//             <select
+//               className="w-full border rounded-lg px-3 py-2 text-sm"
+//               value={priceRange}
+//               onChange={(e) => setPriceRange(e.target.value)}
+//             >
+//               <option value="">All Price Ranges</option>
+//               <option value="0-1000">Under Rs. 1000</option>
+//               <option value="1000-2000">Rs. 1000 - 2000</option>
+//               <option value="2000+">Above Rs. 2000</option>
+//             </select>
+//           </div>
+//         </div>
+//       </aside>
+
+//       {/* Main Content */}
+//       <main className="flex-1">
+//         {loading && (
+//           <p className="text-gray-600 text-center py-10">Loading items...</p>
+//         )}
+
+//         {!loading && items.length === 0 && (
+//           <p className="text-gray-600 text-center py-10">No items found.</p>
+//         )}
+
+//         {!loading && items.length > 0 && (
+//           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+//             {items.map((product) => (
+//               <ProductCard key={product.id} product={product} />
+//             ))}
+//           </div>
+//         )}
+
+//         {/* Pagination */}
+//         {totalPages > 1 && (
+//           <div className="flex justify-center items-center gap-2 mt-8 flex-wrap">
+//             <button
+//               onClick={handlePrevious}
+//               disabled={currentPage === 1}
+//               className={`px-4 py-2 rounded-lg border ${
+//                 currentPage === 1
+//                   ? "bg-gray-200 cursor-not-allowed"
+//                   : "bg-white hover:bg-gray-100"
+//               }`}
+//             >
+//               Previous
+//             </button>
+
+//             {getVisiblePages().map((num) => (
+//               <button
+//                 key={num}
+//                 onClick={() => setCurrentPage(num)}
+//                 className={`px-4 py-2 rounded-lg border ${
+//                   currentPage === num
+//                     ? "bg-red-500 text-white font-semibold"
+//                     : "bg-white hover:bg-gray-100"
+//                 }`}
+//               >
+//                 {num}
+//               </button>
+//             ))}
+
+//             {windowStart + pageWindow - 1 < totalPages && (
+//               <span className="px-2">...</span>
+//             )}
+
+//             <button
+//               onClick={handleNext}
+//               disabled={currentPage === totalPages}
+//               className={`px-4 py-2 rounded-lg border ${
+//                 currentPage === totalPages
+//                   ? "bg-gray-200 cursor-not-allowed"
+//                   : "bg-white hover:bg-gray-100"
+//               }`}
+//             >
+//               Next
+//             </button>
+//           </div>
+//         )}
+//       </main>
+//     </div>
+//   );
+// };
+
+// export default MoreFlashSaleProducts;
+
+import React from 'react'
+
+const MoreFlashSaleProducts = () => {
+  return (
+    <div>MoreFlashSaleProducts</div>
+  )
+}
+
+export default MoreFlashSaleProducts

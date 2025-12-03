@@ -6,10 +6,11 @@ import { Link } from "react-router-dom";
 
 const ProductOfDay = () => {
 
-  const { products, loading } = useSelector((state) => state.products);
+  const { items, loading } = useSelector((state) => state.productOfTheDay);
+
 
   // 🔥 Pick only 6 items (could be featured or random)
-  const flashProducts = [...products]
+  const flashProducts = [...items]
     .sort(() => Math.random() - 0.5)
     .slice(0, 6);
   return (

@@ -3,7 +3,7 @@ import axios from "axios";
 export const verifyEmail = async (token) => {
   try {
     const response = await axios.get(
-      "http://18.208.251.169:8000/api/auth/verify-email/",
+      "http://64.227.179.189:8000/api/auth/verify-email/",
       {
         params: {
           token: token,

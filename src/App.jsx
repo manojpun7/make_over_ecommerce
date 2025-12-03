@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -11,9 +11,18 @@ import Cart from "./components/Cart";
 import MoreProducts from "./components/MoreProducts";
 import Login from "./components/auth/Login";
 import VerifyEmail from "./components/auth/VerifyEmail";
+import MoreFlashSaleProducts from "./components/MoreFlashSaleProducts";
+import { useDispatch } from "react-redux";
+import { fetchCart } from "./lib/store/cart/cartThunk";
 
 
 function App() {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchCart()); // ✅ Load cart on startup
+  }, [dispatch]);
   return (
     <div className="w-full mx-auto text-gray-800 xl:max-w-7xl">
       <Navbar />
@@ -22,6 +31,7 @@ function App() {
 
         <Route path="/products/:slug" element={<Product />} />
         <Route path="/products" element={<MoreProducts />} />
+        <Route path="/flash-sales" element={<MoreFlashSaleProducts />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/auth/signup" element={<SignUp />} />
         <Route path="/auth/login" element={<Login />} />
